@@ -3,7 +3,7 @@ Library and examples for communication between ClueKeeper and Zappar
 
 ## Installation instructions
 - Open a zap within ZapWorks Studio
-- Create a new script by right clicking on the root node, then select New --> Script --> blank
+- Create a new script by right clicking on the root node (or anywhere else in the node hierarchy), then select New --> Script --> blank
 - Rename the script node from `script0` to `cluekeeper`
 - Paste the entire contents of the src/cluekeeper.ts file into your new cluekeeper script.
  
