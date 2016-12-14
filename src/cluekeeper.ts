@@ -2,8 +2,8 @@
  * Library for communication between ClueKeeper and Zappar 
  * 
  * Installation instructions:
- *   Create a new script in ZapWorks Studio by right clicking on the root node,
- *   then select New --> Script --> blank
+ *   Create a new script in ZapWorks Studio by right clicking on the root node
+ *   (or anywhere else in the node hierarchy), then select New --> Script --> blank
  *   Rename the script node from script0 to cluekeeper
  *   Paste the entire contents of this file into your new cluekeeper script.
  * 
@@ -27,7 +27,7 @@ export class CK {
      * Returns a unique identifier for the team.
      */
     static getTeamId(): string {
-        return CK._appData.teamId;
+        return CK._getAppData().teamId;
     }
     
     /**
@@ -35,7 +35,7 @@ export class CK {
      * This corresponds to when the submit button is enabled.
      */
     static canSubmit(): boolean {
-        return CK._appData.canSubmit;
+        return CK._getAppData().canSubmit;
     }
     
     /**
@@ -56,23 +56,21 @@ export class CK {
     	CK._sendMessage(message);
     }
     
-    
     // Private methods
-    private static _appData = {teamId: "", canSubmit: false};
-    static _initAppData() {
-        var hack: any;
-        hack = Z.device;
-        var appDataStr = hack.appData();
-    
-        if (appDataStr) {
-            // Done safely to avoid an unpacking error if not present.
-            CK._appData = JSON.parse(hack.appData());
+    private static _appData = null;
+    static _getAppData() {
+        if (CK._appData == null) {
+            CK._appData = {teamId: "", canSubmit: false};
+            var appDataStr = Z.device.appData();
+            if (appDataStr) {
+                // Done safely to avoid an unpacking error if not present.
+                CK._appData = JSON.parse(appDataStr);
+            }
         }
+        return CK._appData;
     }
     
     static _sendMessage(message: _MessageToClueKeeper): void {
         Z.device.messageHost(JSON.stringify(message));
     }
 }
-
-parent.on("show", CK._initAppData);
