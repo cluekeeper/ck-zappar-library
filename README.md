@@ -13,15 +13,27 @@ Library and examples for communication between ClueKeeper and Zappar
 - Then you can use CK library methods listed below.
  
 ## Supported Methods
-| Method | Args | Returns  | Description | Example |
-|:--- |:--- |:--- |:--- |:--- |
-| getTeamId | | string | Returns a unique identifier for the team. | `CK.getTeamId();` |
-| canSubmit | | boolean | Returns true if players can submit a string as a start code or solution. This corresponds to when the submit button is enabled. | `CK.canSubmit();` |
-| submitString | string | void | Submits a start code or solution to the ClueKeeper app.  The response will be the same as if submitted manually via the submit button. | `CK.submitString("ABC");` |
-| close | | void | Closes the zap. | `CK.close();` |
+| Method | Description |
+|:--- |:--- |
+| getTeamId(): string | Returns a unique identifier for the team. <br>`CK.getTeamId();` |
+| canSubmit(): boolean | Returns true if players can submit a string as a start code or solution. This corresponds to when the submit button is enabled. <br>`CK.canSubmit();` |
+| isSolved(): boolean | Returns true if this clue has been solved. <br>`CK.isSolved();` |
+| submitString(guess: string): void | Submits a start code or solution to the ClueKeeper app.  The response will be the same as if submitted manually via the submit button. <br>`CK.submitString("ABC");` |
+| submitStringAndRelaunchOnSuccess(guess: string, deepLink?: string): void | Submits a solution to the ClueKeeper app, then launches a new zap if the guess is correct. If a deepLink for the subsequent zap is not present, the current zap will be relaunched with isSolved() returning true. This feature is only available for clue solves (not clue starts). <br>`CK.submitStringAndRelaunchOnSuccess("ABC");` |
+| close(): void | Closes the zap. <br>`CK.close();` |
+| closeAndContinue(): void | Closes the zap and navigates the player to the next appropriate screen, using the same logic as the confirmation dialog presented when a clue is solved. For example, in a linear hunt the next screen is the next clue, while in a scramble the next screen is the clue list. If the clue has not been solved or the hunt is not in progress, this behaves the same as close(). <br>`CK.closeAndContinue();` |
 
 ## Examples
-To get started with this library, you can view some of the included examples as follows:
+To get started with this library, you can view some of the included examples:
+
+| Example File | Description |
+|:--- |:--- |
+| submit-string.zpp | Shows how to submit a string for a clue start or clue solution from within a Zap. |
+| double-zap.zpp | Shows how to relaunch the zap for a post-solve user experience. |
+
+Instructions for using examples:
 - Download the .zpp file you want from the examples directory.
 - In ZapWorks Studio, select OPEN PROJECT --> IMPORT A ZPP FILE, then select the .zpp file.
 - Publish the zap and test within ClueKeeper as normal.
+
+
