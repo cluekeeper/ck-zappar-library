@@ -57,6 +57,8 @@ export class CK {
     }
     
     /**
+     * Note: This feature is experimental and likely to change!
+     * 
      * Submits a solution to the ClueKeeper app, then launches a new zap if the
      * guess is correct.
      * 
