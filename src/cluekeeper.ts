@@ -20,6 +20,12 @@ interface _MessageToClueKeeper {
     payload?: any;
 }
 
+enum _SoundId {
+    ALERT = 0,
+    EXPIRE = 1,
+    HINT = 2,
+    SOLVE = 3,
+}
     
 export class CK {
     
@@ -100,6 +106,36 @@ export class CK {
     	CK._sendMessage(message);
     }
     
+    /**
+     * Plays a sound to get the user's attention. This is the same sound used
+     * when a new message becomes available, a clue opens, or a clue nears
+     * expiration.
+     */
+    static playAlertSound(): void {
+        CK._playSound(_SoundId.ALERT);
+    }
+    
+    /**
+     * Plays the sound used to indicate that a clue or the hunt has expired.
+     */
+    static playExpireSound(): void {
+        CK._playSound(_SoundId.EXPIRE);
+    }
+
+    /**
+     * Plays the sound used to indicate that a new free hint is available.
+     */
+    static playHintSound(): void {
+        CK._playSound(_SoundId.HINT);
+    }
+
+    /**
+     * Plays the sound used to indicate that a clue was solved successfully.
+     */
+    static playSolveSound(): void {
+        CK._playSound(_SoundId.SOLVE);
+    }
+    
     // Private methods
     private static _appData = null;
     static _getAppData() {
@@ -116,5 +152,12 @@ export class CK {
     
     static _sendMessage(message: _MessageToClueKeeper): void {
         Z.device.messageHost(JSON.stringify(message));
+    }
+    
+    static _playSound(soundId: _SoundId): void {
+        var payload = {"soundId": soundId};
+        var message:_MessageToClueKeeper = {"type": "PLAY_SOUND",
+                                            "payload": payload};
+    	CK._sendMessage(message);
     }
 }
