@@ -9,7 +9,7 @@ Library and examples for communication between ClueKeeper and Zappar
 
 ## Usage instructions
 - Within your other script files import the CK library by adding this line:<br>
-    `var CK = symbol.nodes.cluekeeper.CK;`
+    `const CK = symbol.nodes.cluekeeper.CK;`
 - Then you can use CK library methods listed below.
 
 ## Supported Methods
@@ -18,6 +18,7 @@ Library and examples for communication between ClueKeeper and Zappar
 | getTeamId(): string | Returns a unique identifier for the team.<br><br>Usage:<br>`CK.getTeamId();` |
 | canSubmit(): boolean | Returns true if players can submit a string as a start code or solution. This corresponds to when the submit button is enabled.<br><br>Usage:<br>`CK.canSubmit();` |
 | isSolved(): boolean | Returns true if this clue has been solved.<br><br>Usage:<br>`CK.isSolved();` |
+| getClueStates(): ClueState[] | Returns an array of `ClueState` objects, each defined as follows:<br>`interface ClueState {`<br>&nbsp;&nbsp;`title: string;`<br>&nbsp;&nbsp;`isStarted: boolean;`<br>&nbsp;&nbsp;`isInProgress: boolean;`<br>&nbsp;&nbsp;`isSolved: boolean;`<br>&nbsp;&nbsp;`isFinished: boolean;`<br>&nbsp;&nbsp;`miniStates: ClueState[];`<br>`}`<br><br>The objects in the array will be in the same order as the default clue order for the hunt.<br><br>Usage:<br>`const clueStates = CK.getClueStates();`<br>`const firstClueTitle = clueStates[0].title;`<br><br>*Note: This feature is only available to players using app version 1.14.0 and higher.* |
 | playAlertSound(): void | Plays a sound to get the user's attention. This is the same sound used when a new message becomes available, a clue opens, or a clue nears expiration.<br><br>Usage:<br>`CK.playAlertSound();`<br><br>*Note: This feature is only available to players using app version 1.14.0 and higher.* |
 | playExpireSound(): void | Plays the sound used to indicate that a clue or the hunt has expired.<br><br>Usage:<br>`CK.playExpireSound();`<br><br>*Note: This feature is only available to players using app version 1.14.0 and higher.* |
 | playHintSound(): void | Plays the sound used to indicate that a new free hint is available.<br><br>Usage:<br>`CK.playHintSound();`<br><br>*Note: This feature is only available to players using app version 1.14.0 and higher.* |
