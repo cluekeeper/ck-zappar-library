@@ -93,6 +93,17 @@ export class CK {
     }
 
     /**
+     * Shows a standard system dialog using the given title and message.
+     * Both title and message are interpreted as HTML.
+     */
+    static showInfoDialog(title: string, text: string): void {
+        var payload = {"title": title, "message": text};
+        var message:_MessageToClueKeeper = {"type": "SHOW_INFO_DIALOG",
+                                            "payload": payload};
+        CK._sendMessage(message);
+    }
+
+    /**
      * Closes the zap.
      */
     static close(): void {
