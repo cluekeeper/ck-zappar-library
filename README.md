@@ -6,6 +6,7 @@ Library and examples for communication between ClueKeeper and Zappar
 - Create a new script by right clicking on the root node (or anywhere else in the node hierarchy), then select New --> Script --> blank
 - Rename the script node from `script0` to `cluekeeper`
 - Paste the entire contents of the [src/cluekeeper.ts](https://raw.githubusercontent.com/cluekeeper/ck-zappar-library/master/src/cluekeeper.ts) file into your new cluekeeper script.
+- **IMPORTANT!** Always be sure the `cluekeeper` script node is the first node below root. This is necessary to ensure that the `cluekeeper` script loads before any other scripts that might want to use the library.
 
 ## Usage instructions
 - Within your other script files import the CK library by adding this line:<br>
