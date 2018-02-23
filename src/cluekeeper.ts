@@ -52,11 +52,20 @@ export class CK {
         const launchContextKey = CK._getAppData().launchContextKey;
         if (launchContextKey == CK.getHuntState()._key) {
             launchContext.state = CK.getHuntState();
+            return launchContext;
         } else {
             for (var clueState of CK.getClueStates()) {
                 if (launchContextKey == clueState._key) {
                     launchContext.state = clueState;
-                    break;
+                    return launchContext;
+                }
+                if (clueState.miniStates) {
+                    for (var miniState of clueState.miniStates) {
+                        if (launchContextKey == miniState._key) {
+                            launchContext.state = miniState;
+                            return launchContext;
+                        }
+                    }
                 }
             }
         }

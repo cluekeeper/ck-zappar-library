@@ -44,8 +44,8 @@ To get started with this library, you can view some of the included examples:
 
 | Example File | Description |
 |:--- |:--- |
+| hunt-state.zpp | Shows how to access and use the hunt state, clue states, and launch context. |
 | submit-string.zpp | Shows how to submit a string for a clue start or clue solution from within a Zap. |
-| double-zap.zpp | Shows how to relaunch the zap for a post-solve user experience. |
 
 Instructions for using examples:
 - Download the .zpp file you want from the examples directory.
