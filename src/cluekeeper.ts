@@ -15,18 +15,6 @@
  *     CK.submitString("ABC");
  */
 
- /**
-  * This interface represents the state of a given clue. See getClueStates().
-  */
- export interface ClueState {
-     title: string;
-     isStarted: boolean;
-     isInProgress: boolean;
-     isSolved: boolean;
-     isFinished: boolean;
-     miniStates: ClueState[];
-}
-
 export class CK {
 
     /**
@@ -52,13 +40,76 @@ export class CK {
     }
 
     /**
+     * Returns the context (i.e. clue start, clue content, hunt start, etc.) and
+     * corresponding state in which this zap was launched.
+     *
+     * See the LaunchContext interface below for details.
+     */
+    static getLaunchContext(): CK.LaunchContext {
+        var launchContext: CK.LaunchContext = {
+            type: CK._getAppData().launchContextType || CK.LaunchContextType.NONE
+        };
+        const launchContextKey = CK._getAppData().launchContextKey;
+        if (launchContextKey == CK.getHuntState()._key) {
+            launchContext.state = CK.getHuntState();
+        } else {
+            for (var clueState of CK.getClueStates()) {
+                if (launchContextKey == clueState._key) {
+                    launchContext.state = clueState;
+                    break;
+                }
+            }
+        }
+        return launchContext;
+    }
+
+    /**
+     * Returns a ClueState object representing the hunt state.
+     *
+     * See the ClueState interface below for details.
+     */
+    static getHuntState(): CK.ClueState {
+        return CK._getAppData().huntState;
+    }
+
+    /**
      * Returns an array of ClueState objects. The objects in the array will be
      * in the same order as the default clue order for the hunt.
      *
-     * See the ClueState interface above for details.
+     * See the ClueState interface below for details.
      */
-    static getClueStates(): ClueState[] {
+    static getClueStates(): CK.ClueState[] {
         return CK._getAppData().clueStates;
+    }
+
+    /**
+     * Plays a sound to get the user's attention. This is the same sound used
+     * when a new message becomes available, a clue opens, or a clue nears
+     * expiration.
+     */
+    static playAlertSound(): void {
+        CK._playSound(_SoundId.ALERT);
+    }
+
+    /**
+     * Plays the sound used to indicate that a clue or the hunt has expired.
+     */
+    static playExpireSound(): void {
+        CK._playSound(_SoundId.EXPIRE);
+    }
+
+    /**
+     * Plays the sound used to indicate that a new free hint is available.
+     */
+    static playHintSound(): void {
+        CK._playSound(_SoundId.HINT);
+    }
+
+    /**
+     * Plays the sound used to indicate that a clue was solved successfully.
+     */
+    static playSolveSound(): void {
+        CK._playSound(_SoundId.SOLVE);
     }
 
     /**
@@ -127,42 +178,18 @@ export class CK {
         CK._sendMessage(message);
     }
 
-    /**
-     * Plays a sound to get the user's attention. This is the same sound used
-     * when a new message becomes available, a clue opens, or a clue nears
-     * expiration.
-     */
-    static playAlertSound(): void {
-        CK._playSound(_SoundId.ALERT);
-    }
-
-    /**
-     * Plays the sound used to indicate that a clue or the hunt has expired.
-     */
-    static playExpireSound(): void {
-        CK._playSound(_SoundId.EXPIRE);
-    }
-
-    /**
-     * Plays the sound used to indicate that a new free hint is available.
-     */
-    static playHintSound(): void {
-        CK._playSound(_SoundId.HINT);
-    }
-
-    /**
-     * Plays the sound used to indicate that a clue was solved successfully.
-     */
-    static playSolveSound(): void {
-        CK._playSound(_SoundId.SOLVE);
-    }
-
     // Private methods
     private static _appData = null;
     static _getAppData() {
         if (CK._appData == null) {
             CK._appData = {
-                teamId: "", canSubmit: false, isSolved: false, clueStates: []
+                teamId: "",
+                canSubmit: false,
+                isSolved: false,
+                launchContextKey: "",
+                launchContextType: CK.LaunchContextType.NONE,
+                huntState: {},
+                clueStates: []
             };
             var appDataStr = Z.device.appData();
             if (appDataStr) {
@@ -195,4 +222,45 @@ enum _SoundId {
     EXPIRE = 1,
     HINT = 2,
     SOLVE = 3,
+}
+
+export namespace CK {
+
+    /**
+     * This interface represents the state of a given clue (or hunt).
+     *
+     * See getClueStates() (or getHuntState()).
+     */
+    export interface ClueState {
+        _key: string;
+        title: string;
+        isStarted: boolean;
+        isInProgress: boolean;
+        isSolved: boolean;
+        isFinished: boolean;
+        miniStates?: ClueState[];
+    }
+
+    /**
+     * This enum represents the possible contexts from which a zap can be
+     * launched.
+     */
+    export enum LaunchContextType {
+        NONE,
+        HUNT_START,
+        CLUE_START,
+        CLUE_CONTENT,
+        PREMETA_CONTENT
+    }
+
+    /**
+     * This interface represents the launch context and state from which a zap
+     * was launched.
+     *
+     * See getLaunchContext().
+     */
+    export interface LaunchContext {
+        type: LaunchContextType;
+        state?: ClueState;
+    }
 }
