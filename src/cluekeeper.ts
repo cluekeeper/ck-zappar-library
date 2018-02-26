@@ -46,8 +46,26 @@ export class CK {
      * See the LaunchContext interface below for details.
      */
     static getLaunchContext(): CK.LaunchContext {
+        var launchContextType = CK.LaunchContextType.NONE;
+        switch (CK._getAppData().launchContextType) {
+            case "NONE":
+                launchContextType = CK.LaunchContextType.NONE;
+                break;
+            case "HUNT_START":
+                launchContextType = CK.LaunchContextType.HUNT_START;
+                break;
+            case "CLUE_START":
+                launchContextType = CK.LaunchContextType.CLUE_START;
+                break;
+            case "CLUE_CONTENT":
+                launchContextType = CK.LaunchContextType.CLUE_CONTENT;
+                break;
+            case "PREMETA_CONTENT":
+                launchContextType = CK.LaunchContextType.PREMETA_CONTENT;
+                break;
+        }
         var launchContext: CK.LaunchContext = {
-            type: CK._getAppData().launchContextType || CK.LaunchContextType.NONE
+            type: launchContextType
         };
         const launchContextKey = CK._getAppData().launchContextKey;
         if (launchContextKey == CK.getHuntState()._key) {
