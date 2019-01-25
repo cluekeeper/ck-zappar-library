@@ -1,7 +1,7 @@
 # ck-zappar-library
 Library and examples for communication between ClueKeeper and Zappar
 
-## NOTICE: The instructions that follow document how to use the full richness of this library with ZapWorks Studio.  However, a subset of this functionality can now be achieved in ZapWorks Designer as well.  To see those instructions, click [here](https://raw.githubusercontent.com/cluekeeper/ck-zappar-library/master/designer-instructions.md).
+## NOTICE: The instructions that follow document how to use the full richness of this library with ZapWorks Studio.  However, a subset of this functionality can now be achieved in ZapWorks Designer as well.  To see those instructions, click [here](designer-instructions.md).
 
 ## Installation Instructions
 - Open a zap within ZapWorks Studio

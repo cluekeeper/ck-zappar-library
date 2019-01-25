@@ -1,6 +1,6 @@
 # Simple Communication with ClueKeeper Using ZapWorks Designer
 
-In general, to make your zaps communicate with the ClueKeeper app, we recommend the use of ZapWorks Studio with the full ck-zappar-library described [here](https://raw.githubusercontent.com/cluekeeper/ck-zappar-library/master/README.md), but if you just want to achieve some simple tasks like submitting an answer, closing your zap, or playing a sound, these are now possible with ZapWorks Designer.
+In general, to make your zaps communicate with the ClueKeeper app, we recommend the use of ZapWorks Studio with the full ck-zappar-library described [here](README.md), but if you just want to achieve some simple tasks like submitting an answer, closing your zap, or playing a sound, these are now possible with ZapWorks Designer.
 
 ## General Instructions
 - In ZapWorks Designer, when adding an action to one of your objects, choose "Host message app" from the "On Tap" menu, then you simply need to fill the Message field with a format that ClueKeeper understands.  We provide several examples here of things you can do.  Other more advanced actions are possible and can be inferred from the source code [here](https://raw.githubusercontent.com/cluekeeper/ck-zappar-library/master/src/cluekeeper.ts), but the more advanced actions are probably better suited for use in ZapWorks Studio since you'd want to use them with more logic around their invocations.
