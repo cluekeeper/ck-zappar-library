@@ -1,14 +1,16 @@
 # ck-zappar-library
 Library and examples for communication between ClueKeeper and Zappar
 
-## Installation instructions
+## NOTICE: The instructions that follow document how to use the full richness of this library with ZapWorks Studio.  However, a subset of this functionality can now be achieved in ZapWorks Designer as well.  To see those instructions, click [here](https://raw.githubusercontent.com/cluekeeper/ck-zappar-library/master/designer-instructions.md).
+
+## Installation Instructions
 - Open a zap within ZapWorks Studio
 - Create a new script by right clicking on the root node (or anywhere else in the node hierarchy), then select New --> Script --> blank
 - Rename the script node from `script0` to `cluekeeper`
 - Paste the entire contents of the [src/cluekeeper.ts](https://raw.githubusercontent.com/cluekeeper/ck-zappar-library/master/src/cluekeeper.ts) file into your new cluekeeper script.
 - **IMPORTANT!** Always be sure the `cluekeeper` script node is the first node below root. This is necessary to ensure that the `cluekeeper` script loads before any other scripts that might want to use the library.
 
-## Usage instructions
+## Usage Instructions
 - Within your other script files import the CK library by adding this line:<br>
     `const CK = symbol.nodes.cluekeeper.CK;`
 - Then you can use CK library methods listed below.
